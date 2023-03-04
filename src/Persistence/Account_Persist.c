@@ -18,22 +18,20 @@ int Account_Perst_SelectAll(account_list_t list)
 	account_t data;
 	int count = 0;
 
-	assert(list!=NULL);
+	assert(list != NULL);
 
 	List_Free(list, account_node_t);
 
 	FILE *fp = fopen(ACCOUNT_DATA_FILE, "rb");
-	if (NULL == fp)
-	{ // 文件不存在
+	if (fp == NULL)
+	{
 		return 0;
 	}
 
 	while (!feof(fp))
 	{
-		// printf("dsdasdas\n");
 		if (fread(&data, sizeof(account_t), 1, fp))
 		{
-			// printf("dsdasdaaaaaaaaaaaaaaas\n");
 			newNode = (account_node_t *)malloc(sizeof(account_node_t));
 			if (!newNode)
 			{

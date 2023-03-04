@@ -5,6 +5,8 @@
 #include "../Service/Sale.h"
 #include "../Service/Account.h"
 #include "../Service/SalesAnalysis.h"
+
+extern account_t gl_CurUser;
 // 10统计销售额
 void StaSales_UI_MgtEntry()
 {

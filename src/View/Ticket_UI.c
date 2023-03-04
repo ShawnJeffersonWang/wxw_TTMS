@@ -1,13 +1,13 @@
+#include <stdio.h>
 #include "../View/Ticket_UI.h"
 #include "../Common/list.h"
 #include "../Service/Ticket.h"
 #include "../Service/Schedule.h"
 #include "../Service/Account.h"
-// #include"../Service/Schedule.h"
 #include "../Service/Play.h"
-static const int TICKET_PAGE_SIZE = 5;
 
-#include <stdio.h>
+static const int TICKET_PAGE_SIZE = 5;
+extern account_t gl_CurUser;
 
 // 05生成演出票
 void Ticket_UI_MgtEntry(int schedule_id)

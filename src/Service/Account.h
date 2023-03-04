@@ -30,7 +30,7 @@ typedef struct account_node
 // 创建管理员Admin匿名系统用户
 void Account_Srv_InitSys();
 
-//account_t gl_CurUser;
+//account_t gl_CurUser;//以后切忌不要在.h文件中实现方法,在.c文件中实现,然后在其他要用的extern
 
 // 验证系统用户的用户名和密码
 int Account_Srv_Verify(char usrName[], unsigned char pwd[]);

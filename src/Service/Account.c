@@ -8,6 +8,7 @@
 #include "../Common/md5.h"
 
 const int len5;
+account_t gl_CurUser;
 // 创建系统初始化账号admin
 void Account_Srv_InitSys()
 {

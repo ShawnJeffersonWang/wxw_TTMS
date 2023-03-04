@@ -7,7 +7,7 @@
 #include "../Service/Account.h"
 
 static const int SCHEDULE_PAGE_SIZE = 5;
-
+extern account_t gl_CurUser;
 // 04安排演出
 void Schedule_UI_MgtEntry(int play_id)
 {

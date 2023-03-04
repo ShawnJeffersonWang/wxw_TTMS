@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <string.h>
 
+extern account_t gl_CurUser;
 //02设置座位
 inline char Seat_UI_Status2Char(seat_status_t status)
 {
@@ -171,7 +172,7 @@ void Seat_UI_MgtEntry(int roomID)
 }
 
 int Seat_UI_Add(seat_list_t list, int roomID, int row, int column)
-{ // ����һ����λ
+{
 
     seat_list_t tmp = Seat_Srv_FindByRowCol(list, row, column);
     if (tmp == NULL)

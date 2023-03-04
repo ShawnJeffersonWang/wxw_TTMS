@@ -6,7 +6,7 @@
 #include "../Common/md5.h"
 
 const int len0 = 20;
-
+extern account_t gl_CurUser;
 // 98维护个人资料
 void MaiAccount_UI_Mgt()
 {

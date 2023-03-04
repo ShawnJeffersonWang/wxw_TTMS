@@ -12,7 +12,7 @@
 static const int SALE_PAGE_SIZE = 5;
 static const int SALESANALYSIS_PAGE_SIZE = 5;
 static const int TICKET_PAGE_SIZE = 10;
-
+extern account_t gl_CurUser;
 // 08售票管理
 int List_Foreach(ticket_list_t list, int id);
 

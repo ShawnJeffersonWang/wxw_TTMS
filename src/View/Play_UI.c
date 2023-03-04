@@ -6,7 +6,7 @@
 #include <stdio.h>
 char ch;
 static const int PLAY_PAGE_SIZE = 5;
-
+extern account_t gl_CurUser;
 // 03管理剧目
 void Play_UI_MgtEntry(void)
 {

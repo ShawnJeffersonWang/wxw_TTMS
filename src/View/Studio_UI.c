@@ -7,6 +7,7 @@
 
 
 //01管理演出厅
+extern account_t gl_CurUser;
 void Seat_UI_MgtEntry(int id);
 
 static const int STUDIO_PAGE_SIZE = 5;
