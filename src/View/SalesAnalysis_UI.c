@@ -48,9 +48,9 @@ void SalesAanalysis_UI_MgtEntry()
 		printf(
 			"---------------------------------------------------------------------------\n");
 
-		Paging_ViewPage_ForEach(head, paging, salesanalysis_node_t, pos, i)
+		Paging_ViewPage_ForEach(head, paging, salesanalysis_node_t, pos, i)//分页器遍历
 		{
-			printf("%-3d|%-11s|%-11s|%-3d|%-6d|%-8d|%-5d|%4d/%2d/%2d|%4d/%2d/%2d\n", pos->data.play_id,
+			printf("%-3d|%-20s|%-11s|%-3d|%-6d|%-8d|%-5d|%4d/%2d/%2d|%4d/%2d/%2d\n", pos->data.play_id,
 				   pos->data.name, pos->data.area, pos->data.duration, pos->data.totaltickets, pos->data.sales,
 				   pos->data.price, pos->data.start_date.year, pos->data.start_date.month, pos->data.start_date.day, pos->data.end_date.year, pos->data.end_date.month, pos->data.end_date.day);
 		}

@@ -45,27 +45,27 @@ void Sale_UI_MgtEntry()
 	do
 	{
 		printf(
-			"\n======================================================================================\n");
+			"\n======================================================================================================\n");
 		printf(
-			"***************************** Projection Play List ***********************************\n");
+			"******************************************* 剧目列表 *************************************************\n");
 
-		printf("%5s %15s %5s %10s %3s %3s %10s %10s     %3s\n", "ID", "NAME", "TYPE", "AREA", "RATING", "DURATION", "STARTDATA", "ENDDATA", "PRICE");
-		printf("--------------------------------------------------------------------------------------\n");
+		printf("%-5s %-20s        %5s %10s %3s %3s %10s %10s     %3s\n", "ID", "NAME", "TYPE", "AREA", "RATING", "DURATION", "STARTDATA", "ENDDATA", "PRICE");
+		printf("------------------------------------------------------------------------------------------------------\n");
 
 		Paging_ViewPage_ForEach(list, paging, play_node_t, pos, i)
 		{
-			printf("%5d %15s %5d %10s %6d %6d %7d%3d%3d %4d%3d%3d     %4d\n", pos->data.id, pos->data.name
+			printf("%-5d %-25s %5d    %10s %6d %6d %7d%3d%3d %4d%3d%3d     %4d\n", pos->data.id, pos->data.name
 			, pos->data.type, pos->data.area, pos->data.rating, pos->data.duration, pos->data.start_date.year
 			, pos->data.start_date.month, pos->data.start_date.day, pos->data.end_date.year, pos->data.end_date.month
 			, pos->data.end_date.day, pos->data.price);
 		}
 
-		printf("----------------Total Recoeds: %2d---------------------------Page %2d   %2d   -----------\n", paging.totalRecords, Pageing_CurPage(paging), Pageing_TotalPages(paging));
+		printf("----------------Total Recoeds: %2d-------------------------------------------Page %2d   %2d   -----------\n", paging.totalRecords, Pageing_CurPage(paging), Pageing_TotalPages(paging));
 
-		printf("**************************************************************************************\n");
+		printf("******************************************************************************************************\n");
 
 		printf("[C]show Schedule      [S]find play name          [P]rev       [N]ext         [R]eturn          \n");
-		printf("======================================================================================\n");
+		printf("======================================================================================================\n");
 		printf("please input your choice : ");
 		setbuf(stdin, NULL);
 		scanf("%c", &choice);
@@ -74,14 +74,14 @@ void Sale_UI_MgtEntry()
 		{
 		case 'c':
 		case 'C':
-			printf("please input play_id  :");
+			printf("请输入演出ID:");
 			scanf("%d", &play_id);
 			getchar();
 			Sale_UI_ShowScheduler(play_id);
 			break;
 		case 's':
 		case 'S':
-			printf("please input the Play_ name :");
+			printf("请输入演出名称:");
 			setbuf(stdin, NULL);
 			scanf("%s", name);
 			system("clear");
@@ -131,10 +131,10 @@ void Sale_UI_ShowScheduler(int play_id) // 通过 剧目ID 显示 演出计划
 	do
 	{
 		printf("===================================================================================================\n");
-		printf("*****************************************Schedule  List*******************************************\n");
+		printf("*****************************************演出计划列表*******************************************\n");
 		printf("---------------------------------------------------------------------------------------------------\n");
 
-		printf(" Schedule ID     Play ID      Stdio ID       fang ying ri qi     fang ying shi jian     seat_count\n");
+		printf(" 演出计划ID     剧目ID      演出厅ID       放映日期     放映时间     座位数\n");
 		printf("---------------------------------------------------------------------------------------------------\n");
 		Paging_ViewPage_ForEach(list, paging, schedule_node_t, pos, i)
 		{
@@ -147,7 +147,7 @@ void Sale_UI_ShowScheduler(int play_id) // 通过 剧目ID 显示 演出计划
 		// 用于显示座位情况列表
 		//
 		///////////////////////////////////
-		printf("Your choice : ");
+		printf("您的选择 : ");
 
 		scanf("%c", &choice);
 		getchar();
@@ -156,7 +156,7 @@ void Sale_UI_ShowScheduler(int play_id) // 通过 剧目ID 显示 演出计划
 		{
 		case 'T':
 		case 't':
-			printf("Please input Schedule ID:");
+			printf("请输入演出计划ID:");
 			setbuf(stdin, NULL);
 			scanf("%d", &schedule_id);
 			getchar();
@@ -187,7 +187,7 @@ int Sale_UI_ShowTicket(int schedule_id)
 	List_Init(list, seat_node_t);
 	int studio_ID;
 
-	printf("please input the studio ID :");
+	printf("请输入演出厅ID :");
 	scanf("%d", &studio_ID);
 	getchar();
 	int seat = Seat_Srv_FetchValidByRoomID(list, studio_ID);
@@ -214,9 +214,9 @@ int Sale_UI_ShowTicket(int schedule_id)
 		//
 		//
 		printf("====================================================================================\n");
-		printf("*****************************************Ticket*************************************\n");
+		printf("*****************************************演出票*************************************\n");
 		printf("------------------------------------------------------------------------------------\n");
-		printf("Ticket ID          Scheuid ID         Seat ID       Price             Ticket Status\n");
+		printf("票ID          演出计划ID         座位ID       票价             票状态\n");
 		Paging_ViewPage_ForEach(list_ti, paging, ticket_t, pos, i)
 		{
 			printf("  %5d               %5d            %5d      %5d                     %5d\n", pos->data.id, pos->data.schedule_id, pos->data.seat_id, pos->data.price, pos->data.status);
@@ -314,26 +314,26 @@ int Sale_UI_SellTicket(ticket_list_t list_t, seat_list_t list_s)
 	int row, col;
 	while (1)
 	{
-		printf("please input the row you want to buy :");
+		printf("请输入你想要的座位行号 :");
 		scanf("%d", &row);
-		printf("please input the col you want to buy :");
+		printf("请输入你想要的座位列号 :");
 		scanf("%d", &col);
 		getchar();
 		seat = Seat_Srv_FindByRowCol(list_s, row, col);
 
 		if (NULL == seat)
 		{
-			printf("the seat is not exit!\n");
+			printf("这个座位不存在!\n");
 			continue;
 		}
 
-		if (seat->data.status == '@')
+		if (seat->data.status == '~')
 		{
-			printf("the seat is broken!\n\n");
+			printf("这个座位已损坏!\n\n");
 		}
 		else if (seat->data.status == ' ')
 		{
-			printf("the seat is empty!!\n");
+			printf("座位为空!!\n");
 		}
 		else
 		{
@@ -421,7 +421,7 @@ void Sale_UI_ReturnTicket()
 			refound.time.hour = p->tm_hour;
 			refound.time.minute = p->tm_min;
 			refound.time.second = p->tm_sec;
-			printf("please input Salesperson ID:");
+			printf("请输入售票员ID:");
 			scanf("%d", &refound.user_id);
 			getchar();
 			Sale_Srv_Add(&refound);
@@ -431,10 +431,8 @@ void Sale_UI_ReturnTicket()
 			printf("该票还未被售出");
 		}
 	}
-
-	else
-	{
-		printf("票务数据错误");
+	else{	printf("该票不存在!");
+		return;
 	}
 }
 

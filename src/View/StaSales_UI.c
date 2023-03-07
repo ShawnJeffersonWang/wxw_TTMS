@@ -69,7 +69,7 @@ void StaSales_UI_Self()
 }
 
 // 统计售票员销售额界面
-void StaSales_UI_Clerk()
+void StaSales_UI_Clerk()//wxw 20021201
 {
     account_t tem;
     int id;
@@ -77,23 +77,23 @@ void StaSales_UI_Clerk()
     ttms_date_t startdate, enddate;
 
     char Usrname[20];
-    printf("please input the Salesperson username:");
+    printf("请输入售票员用户名:");
     scanf("%s", Usrname);
     if (Account_Srv_FetchByName(Usrname, &tem))
     {
         if (tem.type != USR_CLERK)
         {
-            printf("This man is not a salesman!!");
+            printf("此人不是售票员!!");
             getchar();
             return;
         }
         id = tem.id;
-        printf("please input startdate(year month day):");
+        printf("请输入开始日期(年 月 日):");
         scanf("%d%d%d", &startdate.year, &startdate.month, &startdate.day);
-        printf("please input enddate(year month day):");
+        printf("请输入结束日期(年 月 日):");
         scanf("%d%d%d", &enddate.year, &enddate.month, &enddate.day);
         getchar();
-        printf("The salesman's sales during this period are %d\n", SalesAnalysis_Srv_CompSaleVal(id, startdate, enddate));
+        printf("售票员的销售额为 %d\n", SalesAnalysis_Srv_CompSaleVal(id, startdate, enddate));
     }
     else
     {

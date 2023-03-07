@@ -113,7 +113,7 @@ int Account_Perst_SelByName(char usrName[], account_t *buf)
 				*buf = data;
 				found = 1;
 				break;
-			};
+			}
 		}
 	}
 	fclose(fp);

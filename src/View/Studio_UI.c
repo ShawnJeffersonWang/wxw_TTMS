@@ -5,8 +5,7 @@
 #include "../Service/Studio.h"
 #include "../Service/Seat.h"
 
-
-//01管理演出厅
+// 01管理演出厅
 extern account_t gl_CurUser;
 void Seat_UI_MgtEntry(int id);
 
@@ -40,30 +39,30 @@ void Studio_UI_MgtEntry(void)
 	{
 		system("clear");
 		printf(
-			"\n==================================================================\n");
+			"\n================================================================================================\n");
 		printf(
-			"********************** Projection Room List **********************\n");
-		printf("%5s  %18s  %10s  %10s  %10s\n", "ID", "Name", "Rows Count",
+			"****************************************** 演出厅列表 ******************************************\n");
+		printf("%-5s  %-18s  %-10s  %-10s  %-10s\n", "ID", "Name", "Rows Count",
 			   "Columns Count", "Seats Count");
 		printf(
-			"------------------------------------------------------------------\n");
+			"------------------------------------------------------------------------------------------------\n");
 		Paging_ViewPage_ForEach(head, paging, studio_node_t, pos, i)
 		{
-			printf("%5d  %18s  %10d  %10d  %10d\n", pos->data.id,
+			printf("%-5d  %-18s  %-10d  %-10d     %-10d\n", pos->data.id,
 				   pos->data.name, pos->data.rowsCount, pos->data.colsCount,
 				   pos->data.seatsCount);
 		}
 
 		printf(
-			"------- Total Records:%2d ----------------------- Page %2d/%2d ----\n",
+			"------- Total Records:%2d ------------------------------------------------------- Page %2d/%2d ----\n",
 			paging.totalRecords, Pageing_CurPage(paging),
 			Pageing_TotalPages(paging));
 		printf(
-			"******************************************************************\n");
+			"*************************************************************************************************\n");
 		printf(
-			"[P]revPage|[N]extPage | [A]dd|[D]elete|[U]pdate | [S]eat | [R]eturn");
+			"      [P]revPage | [N]extPage | [A]dd | [D]elete | [U]pdate | [S]eat | [R]eturn");
 		printf(
-			"\n==================================================================\n");
+			"\n=================================================================================================\n");
 		printf("Your Choice:");
 		scanf("%c", &choice);
 		getchar();
@@ -139,13 +138,13 @@ int Studio_UI_Add(void)
 	do
 	{
 		printf("\n=======================================================\n");
-		printf("****************  Add New Projection Room  ****************\n");
+		printf("****************  添加演出厅  ****************\n");
 		printf("-------------------------------------------------------\n");
-		printf("Room Name:");
+		printf("演出厅名称:");
 		scanf("%s", rec.name);
-		printf("Row Count of Seats:");
+		printf("座位行数:");
 		scanf("%d", &(rec.rowsCount));
-		printf("Column Count of Seats:");
+		printf("座位列数:");
 		scanf("%d", &(rec.colsCount));
 		getchar();
 		rec.seatsCount = 0;
@@ -154,10 +153,10 @@ int Studio_UI_Add(void)
 		if (Studio_Srv_Add(&rec))
 		{
 			newRecCount += 1;
-			printf("The new room added successfully!\n");
+			printf("添加成功!\n");
 		}
 		else
-			printf("The new room added failed!\n");
+			printf("添加失败!\n");
 		printf("-------------------------------------------------------\n");
 		printf("[A]dd more, [R]eturn:");
 		scanf("%c", &choice);
@@ -183,10 +182,10 @@ int Studio_UI_Modify(int id)
 	}
 
 	printf("\n=======================================================\n");
-	printf("****************  Update Projection Room  ****************\n");
+	printf("****************  更新演出厅  ****************\n");
 	printf("-------------------------------------------------------\n");
-	printf("Room ID:%d\n", rec.id);
-	printf("Room Name[%s]:", rec.name);
+	printf("演出厅ID:%d\n", rec.id);
+	printf("演出厅名称[%s]:", rec.name);
 	scanf("%s", rec.name);
 
 	List_Init(list, seat_node_t);
@@ -195,9 +194,9 @@ int Studio_UI_Modify(int id)
 	{
 		do
 		{
-			printf("Row Count of Seats should >= [%d]:", rec.rowsCount);
+			printf("座位行数应 >= [%d]:", rec.rowsCount);
 			scanf("%d", &(newrow));
-			printf("Column Count of Seats should >= [%d]:", rec.colsCount);
+			printf("座位列数应 >= [%d]:", rec.colsCount);
 			scanf("%d", &(newcolumn));
 		} while (newrow < rec.rowsCount || newcolumn < rec.colsCount);
 
@@ -207,9 +206,9 @@ int Studio_UI_Modify(int id)
 	}
 	else
 	{
-		printf("Row Count of Seats:");
+		printf("座位行数:");
 		scanf("%d", &rec.rowsCount);
-		printf("Column Count of Seats:");
+		printf("座位列数:");
 		scanf("%d", &rec.colsCount);
 		getchar();
 		rec.seatsCount = 0;
@@ -221,10 +220,10 @@ int Studio_UI_Modify(int id)
 	{
 		rtn = 1;
 		printf(
-			"The room data updated successfully!\nPress [Enter] key to return!\n");
+			"更新成功\nPress [Enter] key to return!\n");
 	}
 	else
-		printf("The room data updated failed!\nPress [Enter] key to return!\n");
+		printf("更新失败!\nPress [Enter] key to return!\n");
 	getchar();
 	return rtn;
 }

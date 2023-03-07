@@ -28,7 +28,7 @@ void MaiAccount_UI_Mgt()
         else
         {
             char ch;
-            printf("Without this user, please [R]e-input or [E]xit\n");
+            printf("Without this user, please [R]e-input or [E]xit\n");//注意
             scanf("%c", &ch);
             getchar();
             if (ch == 'E' || ch == 'e')

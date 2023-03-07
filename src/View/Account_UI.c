@@ -3,7 +3,7 @@
 #include <string.h>
 #include "../Common/list.h"
 #include "../Service/Account.h"
-#include <termios.h>
+#include <termios.h> //getch()
 #include <unistd.h>
 #include <assert.h>
 #include "../Common/md5.h"
@@ -15,6 +15,20 @@ const int len1 = 20;
 extern account_t gl_CurUser;
 // 99管理系统用户
 //  系统登录
+
+int getch(void)
+{
+    int ch;
+    struct termios tm, tm_old;
+    tcgetattr(STDIN_FILENO, &tm);
+    tm_old = tm;
+    tm.c_lflag &= ~(ICANON | ECHO);
+    tcsetattr(STDIN_FILENO, TCSANOW, &tm);
+    ch = getchar();
+    tcsetattr(STDIN_FILENO, TCSANOW, &tm_old);
+    return ch;
+}
+
 int SysLogin()
 {
 	system("clear");
@@ -50,35 +64,23 @@ int SysLogin()
 		   "@@^*******,@^.......@^........,[........=@.............................,@OOOOOOOOOOOOOOOOOOO@@.............................]O@@O[**.=@^.****************\n"
 		   "=@O*******@@........@^.................=@@@@\\`..........................=@OOOOOOOOOOOOOOOOOOO..........................,/@@O[O@^****/O*****************\n"
 		   "*O@\\******@^........\\@`.............../@@@@@@@@@O].......................,OOOOOOOOOOOOOOOOO[........................]@@@[*...O@^****OO***************,\n"
-		   "欢迎使用\n"
-		   "##########  ##########  ####     ####         ############\n"
-		   "##########  ##########  #############       ######\n"
-		   "   ###         ###      ###  ###  ###      #####\n"
-		   "   #.#         #.#      ###   #   ###       #####\n"
-		   "   ###         ###      ###       ###          #####\n"
-		   "   #.#         #.#      ###       ###             #####\n"
-		   "   #.#         #.#      ###       ###               #####\n"
-		   "   ###         ###      ###       ###                #####\n"
-		   "                                                ########\n"
-		   "                                           ##########\n"
-		   "影院管理系统\n");
+		   "欢迎使用TTMS影院管理系统\n");
 	Account_Srv_InitSys(); // 创建Admin系统用户
 	int x = 3;
 	while (x > 0)
 	{
-		printf("You have %d login opportunities\n", x);
+		printf("您还有 %d 次登录机会!\n", x);
 		char usrName[35], pwd[35];
-		printf("please input you name :");
+		printf("请输入用户名 :");
 		setbuf(stdin, NULL);
-
 		scanf("%s", usrName);
 
-		printf("please input you password :");
+		printf("请输入密码 :");
 		setbuf(stdin, NULL);
 
 		for (int i = 0; i < len1; i++)
 		{
-			pwd[i] = getchar();
+			pwd[i] = getch();
 			if (pwd[i] == '\n')
 			{
 				pwd[i] = '\0';
@@ -107,13 +109,13 @@ int SysLogin()
 
 		if (Account_Srv_Verify(usrName, decrypt)) // 验证系统用户是否存在
 		{
-			printf("\nWelcome distinguished users,please input [Enter]!\n");
+			printf("\nLogin successfully! welcome shawn_wang! []~（￣▽￣）~*");
 			getchar();
 			return 1;
 		}
 		else
 		{
-			printf("login in error\n");
+			printf("登录失败! ╮（￣▽￣）╭\n");
 			x--;
 		}
 	}
@@ -121,7 +123,7 @@ int SysLogin()
 	if (x == 0)
 	{
 		char cho;
-		printf("Do you forget your password and want to reset it?\n[Y]es   or   [N]o:");
+		printf("忘记密码?  想要重置? （￣▽￣）~*\n[Y]es   or   [N]o:");
 		scanf("%c", &cho);
 		getchar();
 		if (cho == 'Y' || cho == 'y')
@@ -181,7 +183,7 @@ void Account_UI_MgtEntry(void)
 		Paging_ViewPage_ForEach(head, paging, account_node_t, pos, ii)
 		{
 			printf("%3d  %18s  ", pos->data.id, pos->data.username);
-			printf("%s ", pos->data.password);
+			printf("%16s ", pos->data.password);
 			printf("  %6c\n", Account_UI_Status2Char(pos->data.type));
 		}
 

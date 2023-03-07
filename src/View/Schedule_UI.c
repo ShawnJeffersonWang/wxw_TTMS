@@ -38,17 +38,17 @@ void Schedule_UI_MgtEntry(int play_id)
 
 	do
 	{
-		printf("=================================================================================================\n");
-		printf("*****************************************Projection Schedue  List*******************************\n");
+		printf("===================================================================================================\n");
+		printf("************************************************演出计划列表**************************************\n");
 
-		printf("%s  %10s    %10s    %15s    %15s    %15s", "Schedule ID", "Play ID", "Studio ID", "fang ying ri qi", "fang ying shi jian", "seat_count\n");
-		printf("-------------------------------------------------------------------------------------------------\n");
+		printf("%s  %10s    %10s    %15s    %15s    %15s", "演出计划ID", "剧目ID", "演出厅ID", "放映日期", "放映时间", "座位数\n");
+		printf("---------------------------------------------------------------------------------------------------\n");
 		Paging_ViewPage_ForEach(head, paging, schedule_node_t, pos, i)
 		{
-			printf("%3d                %3d       %3d              %d.%2d.%2d           %d:%2d:%2d                  %3d\n", pos->data.id, pos->data.play_id, pos->data.studio_id, pos->data.date.year, pos->data.date.month, pos->data.date.day, pos->data.time.hour, pos->data.time.minute, pos->data.time.second, pos->data.seat_count);
+			printf("%3d           %3d       %3d           %d.%2d.%2d        %d:%2d:%2d          %3d\n", pos->data.id, pos->data.play_id, pos->data.studio_id, pos->data.date.year, pos->data.date.month, pos->data.date.day, pos->data.time.hour, pos->data.time.minute, pos->data.time.second, pos->data.seat_count);
 		}
 
-		printf("---totalRecords: %2d ------------------------------------------Page %2d/%2d------------------------\n", paging.totalRecords, Pageing_CurPage(paging), Pageing_TotalPages(paging));
+		printf("---totalRecords: %2d ---------------------------------------------Page %2d/%2d------------------------\n", paging.totalRecords, Pageing_CurPage(paging), Pageing_TotalPages(paging));
 
 		printf("[P]revPage  [N]extPage [A]dd [U]pdate [D]elete [T]icket [R]eturn");
 
@@ -69,7 +69,7 @@ void Schedule_UI_MgtEntry(int play_id)
 			break;
 		case 'd':
 		case 'D':
-			printf("Schedule ID:");
+			printf("演出计划ID:");
 			scanf("%d", &yan_id);
 			getchar();
 			if (Schedule_UI_Delete(yan_id))
@@ -80,7 +80,7 @@ void Schedule_UI_MgtEntry(int play_id)
 			break;
 		case 'U':
 		case 'u':
-			printf("Schedule ID: ");
+			printf("演出计划ID: ");
 			scanf("%d", &yan_id);
 			getchar();
 			if (Schedule_UI_Modify(yan_id))
@@ -91,7 +91,7 @@ void Schedule_UI_MgtEntry(int play_id)
 			break;
 		case 't':
 		case 'T':
-			printf("Schedule ID :");
+			printf("演出计划ID :");
 			scanf("%d", &schedule_id);
 			getchar();
 			if(Schedule_Srv_FetchByID(head,schedule_id))
@@ -131,26 +131,26 @@ void Schedule_UI_ListAll(void)
 
 	do
 	{
-		printf("\n===========================================================\n");
-		printf("*********************Inquiry Performance*********************\n");
+		printf("\n==========================================================================================\n");
+		printf("*****************************************查询演出*****************************************\n");
 		Paging_ViewPage_ForEach(list, paging, schedule_node_t, pos, i)
 		{
 			// if(i % paging.pageSize != 0)
 			{
-				printf("%5s %20s %5s %10s %3s %3s %8s %8s %3s\n", "Schedule ID", "Schedule NAME", "TYPE", "AREA", "RATING", "DURATION", "STARTDATA", "ENDDATA", "PRICE");
+				printf("%5s %20s %5s %10s %3s %3s %8s %8s %3s\n", "演出计划ID", "演出计划名称", "类型", "日期", "等级", "持续时间", "开始日期", "结束日期", "票价");
 				//	Play_Srv_FetchByID(pos->data.play_id,&play);
 				//	printf( "%5d %20s %5d %10s %3d %3d %4d %2d %2d %4d %2d %2d %4d\n",play.id,play.name,play.type,play.area,play.rating,play.duration,play.start_date.year,play.start_date.month,play.start_date.day,play.end_date.year,play.end_date.month,play.end_date.day,play.price);
 				printf("%d \n", pos->data.id);
 				Studio_Srv_FetchByID(pos->data.studio_id, &studio);
-				printf("%5s  %18s  %10s  %10s  %10s\n", "Stduio ID", "Stdio Name", "Rows Count", "Columns Count", "Seats Count");
+				printf("%5s  %18s  %10s  %10s  %10s\n", "演出厅ID", "演出厅名称", "行数", "列数", "座位数");
 				printf("%5d  %18s  %10d  %10d  %10d\n", studio.id, studio.name, studio.rowsCount, studio.colsCount, studio.seatsCount);
 			}
 		}
 
 		printf("--------------Total Records : %2d ----------------------Page %2d / %2d-----\n", paging.totalRecords, Pageing_CurPage(paging), Pageing_TotalPages(paging));
-		printf("===============================================================================\n");
+		printf("=======================================================================================\n");
 		printf("[R]eturn   [N]ext     [P]rev       [Q]ry");
-		printf("\n**********************************************************************\n");
+		printf("\n***************************************************************************************\n");
 
 		printf("Your choice:");
 
@@ -180,7 +180,7 @@ void Schedule_UI_ListAll(void)
 		case 'Q':
 		case 'q':
 			setbuf(stdin, NULL);
-			printf("please input the name you want to find :");
+			printf("请输入您想查询的剧目名称:");
 			scanf("%s", play_name);
 			Schedule_UI_Qry(play_name);
 			break;
@@ -218,7 +218,7 @@ int Schedule_UI_Qry(char *play_name)
 		while (list_s != temp_s)
 		{
 			rtn++;
-			printf("%s %10s %10s %20s %20s %20s", "Play ", "Play Time  ", "Studio ID ", "fang ying ri qi", "fang ying shi jian", "seat_count\n");
+			printf("%s %10s %10s %20s %20s %20s", "演出名称 ", "演出时间  ", "演出厅ID ", "放映日期", "放映时间", "座位数\n");
 			printf("%6s %3d %3d %3d %3d %3d %3d %3d %3d %3d\n", list->data.name, list->data.duration, list_s->data.studio_id, list_s->data.date.year, list_s->data.date.month, list_s->data.date.day, list_s->data.time.hour, list_s->data.time.minute, list_s->data.time.second, list_s->data.seat_count);
 			list_s = list_s->next;
 		}
@@ -246,16 +246,16 @@ int Schedule_UI_Add(int play_id)
 	do
 	{
 		studio_t buf;
-		printf("\n==========================================================================\n");
-		printf("********************************Add New Projection Schedule*************************\n");
-		printf("------------------------------------------------------------------------------\n");
+		printf("\n====================================================================================\n");
+		printf("********************************添加演出计划*************************\n");
+		printf("------------------------------------------------------------------------------------\n");
 
 		setbuf(stdin, NULL);
 
 		rec.play_id = play_id;
 		while (1)
 		{
-			printf("studio ID:");
+			printf("演出厅ID:");
 			scanf("%d", &rec.studio_id);
 			if (Studio_Srv_FetchByID(rec.studio_id, &buf))
 			{
@@ -263,16 +263,16 @@ int Schedule_UI_Add(int play_id)
 			}
 			else
 			{
-				printf("the studio is not exist!\n");
+				printf("演出厅不存在!\n");
 				continue;
 			}
 		}
 
-		printf("Screening Date:");
+		printf("上映时间:");
 		scanf("%d%d%d", &rec.date.year, &rec.date.month, &rec.date.day);
-		printf("show time :");
+		printf("演出时长:");
 		scanf("%d%d%d", &rec.time.hour, &rec.time.minute, &rec.time.second);
-		printf("seat count :");
+		printf("座位数量:");
 		scanf("%d", &rec.seat_count);
 
 		setbuf(stdin, NULL);
@@ -282,11 +282,11 @@ int Schedule_UI_Add(int play_id)
 		if (Schedule_Srv_Add(&rec))
 		{
 			newRecCount += 1;
-			printf("the new Schedule successfully!\n");
+			printf("添加演出计划成功!\n");
 		}
 		else
 		{
-			printf("the new Schedule failed!\n");
+			printf("添加演出计划失败!\n");
 		}
 
 		printf("-------------------------------------------\n");
@@ -346,18 +346,18 @@ int Schedule_UI_Modify(int id)
 	}
 
 	printf("\n ===========================================================\n");
-	printf("*****************************Update Project Schedule ********************\n");
+	printf("*****************************更新演出计划 ********************\n");
 	printf("-----------------------------------------------------------------\n");
 
 	rec.id = id;
 	printf("Enter modify data: \n");
-	printf("studio ID:");
+	printf("演出厅ID:");
 	scanf("%d", &rec.studio_id);
-	printf("Screening Date:");
+	printf("放映日期:");
 	scanf("%d%d%d", &rec.date.year, &rec.date.month, &rec.date.day);
-	printf("show time :");
+	printf("放映时间:");
 	scanf("%d%d%d", &rec.time.hour, &rec.time.minute, &rec.time.second);
-	printf("seat count :");
+	printf("座位数:");
 	scanf("%d", &rec.seat_count);
 
 	printf("------------------------------------------\n");

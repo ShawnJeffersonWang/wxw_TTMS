@@ -4,6 +4,7 @@
 #include "../Service/Account.h"
 #include "../Service/Schedule.h"
 #include <stdio.h>
+
 char ch;
 static const int PLAY_PAGE_SIZE = 5;
 extern account_t gl_CurUser;
@@ -19,7 +20,7 @@ void Play_UI_MgtEntry(void)
 
 	int i, id;
 	char choice;
-	//Play_UI_screen();
+	// Play_UI_screen();
 	play_list_t head;
 	play_node_t *pos;
 	Pagination_t paging;
@@ -34,24 +35,24 @@ void Play_UI_MgtEntry(void)
 	{
 		system("clear");
 		printf(
-			"\n=======================================================================================\n");
+			"\n=======================================================================================================\n");
 		printf(
-			"****************************** Projection Play List ***********************************\n");
+			"******************************************** 剧目列表 *************************************************\n");
+		printf("%-5s %-20s      %5s %10s %3s %3s %10s %10s     %3s\n", "ID", "NAME", "TYPE", "AREA", "RATING", "DURATION", "STARTDATA", "ENDDATA", "PRICE");
 
-		printf("%5s %15s %5s %10s %3s %3s %10s %10s     %3s\n", "ID", "NAME", "TYPE", "AREA", "RATING", "DURATION", "STARTDATA", "ENDDATA", "PRICE");
-		printf("---------------------------------------------------------------------------------------\n");
+		printf("-------------------------------------------------------------------------------------------------------\n");
 
 		Paging_ViewPage_ForEach(head, paging, play_node_t, pos, i)
 		{
-			printf("%5d %15s %5d %10s %6d %6d %7d%3d%3d %4d%3d%3d     %4d\n", pos->data.id, pos->data.name, pos->data.type, pos->data.area, pos->data.rating, pos->data.duration, pos->data.start_date.year, pos->data.start_date.month, pos->data.start_date.day, pos->data.end_date.year, pos->data.end_date.month, pos->data.end_date.day, pos->data.price);
+			printf("%-5d %-25s %5d %10s %6d %6d %7d%3d%3d %4d%3d%3d     %4d\n", pos->data.id, pos->data.name, pos->data.type, pos->data.area, pos->data.rating, pos->data.duration, pos->data.start_date.year, pos->data.start_date.month, pos->data.start_date.day, pos->data.end_date.year, pos->data.end_date.month, pos->data.end_date.day, pos->data.price);
 		}
 
-		printf("-----------------Total Recoeds: %2d---------------------------Page %2d   %2d   -----------\n", paging.totalRecords, Pageing_CurPage(paging), Pageing_TotalPages(paging));
+		printf("-----------------Total Recoeds: %2d---------------------------------------------Page %2d/%2d   -----------\n", paging.totalRecords, Pageing_CurPage(paging), Pageing_TotalPages(paging));
 
-		printf("***************************************************************************************\n");
+		printf("*******************************************************************************************************\n");
 
-		printf("[P]revPage|[N]extPage | [A]dd|[D]elete|[U]pdate | [S]earch | [F]ix up | [R]eturn");
-		printf("\n=======================================================================================\n");
+		printf("[P]revPage|[N]extPage | [A]dd|[D]elete|[U]pdate | [S]earch | [F]ind | [R]eturn");
+		printf("\n=======================================================================================================\n");
 		printf("your choice: ");
 		scanf("%c", &choice);
 
@@ -71,7 +72,7 @@ void Play_UI_MgtEntry(void)
 			break;
 		case 'd':
 		case 'D':
-			printf("Play_ID:");
+			printf("演出ID:");
 			scanf("%d", &id);
 			while ((ch = getchar()) != '\n')
 				;
@@ -83,7 +84,7 @@ void Play_UI_MgtEntry(void)
 			break;
 		case 'u':
 		case 'U':
-			printf("Play_ID:");
+			printf("演出ID:");
 			scanf("%d", &id);
 			while ((ch = getchar()) != '\n')
 				;
@@ -95,7 +96,7 @@ void Play_UI_MgtEntry(void)
 			break;
 		case 's':
 		case 'S':
-			printf("Play_ID:");
+			printf("演出ID:");
 			scanf("%d", &id);
 			while ((ch = getchar()) != '\n')
 				;
@@ -107,7 +108,7 @@ void Play_UI_MgtEntry(void)
 			break;
 		case 'f':
 		case 'F':
-			printf("Input the Play_ID:");
+			printf("请输入演出ID:");
 			scanf("%d", &id);
 			getchar();
 			Schedule_UI_MgtEntry(id);
@@ -148,20 +149,20 @@ int Play_UI_Add(void)
 			return 0;
 		}
 		printf("\n=======================================================================================\n");
-		printf("************************************Add New Play***************************************\n");
+		printf("************************************添加新演出***************************************\n");
 		printf("---------------------------------------------------------------------------------------\n");
-		printf("Please improve the information.\n");
-		printf("play name : ");
+		printf("请在下方输入添加的演出信息.\n");
+		printf("演出名称 : ");
 		scanf("%s", rec.name);
-		printf("the  type of the play  (1 is the FILE || 2 is the opear || 3  is the concert) : ");
+		printf("演出类型  (1 电影 || 2 戏剧 || 3  演唱会) : ");
 		scanf("%d", &(rec.type));
 		getchar();
-		printf("the play destination area : ");
+		printf("上映地区 : ");
 		scanf("%s", rec.area);
-		printf("the grade of the play  (1 or 2 or 3) : ");
+		printf("演出等级  (1 or 2 or 3) : ");
 		scanf("%d", &rec.rating);
 		getchar();
-		printf("how long does the play last :");
+		printf("演出持续时间 :");
 		scanf("%d", &rec.duration);
 		getchar();
 
@@ -169,7 +170,7 @@ int Play_UI_Add(void)
 		{
 			while (1)
 			{
-				printf("When does the play begin : ");
+				printf("演出开始于? : ");
 				scanf("%d%d%d", &rec.start_date.year, &rec.start_date.month, &rec.start_date.day);
 				getchar();
 				if (time_judge(rec.start_date.year, rec.start_date.month, rec.start_date.day))
@@ -179,7 +180,7 @@ int Play_UI_Add(void)
 			}
 			while (1)
 			{
-				printf("When does the play end : ");
+				printf("演出结束于? : ");
 				scanf("%d%d%d", &rec.end_date.year, &rec.end_date.month, &rec.end_date.day);
 				getchar();
 				if (time_judge(rec.end_date.year, rec.end_date.month, rec.end_date.day))
@@ -196,20 +197,20 @@ int Play_UI_Add(void)
 			}
 			else
 			{
-				printf("Error in input time\npleas again\n");
+				printf("输入时间错误!\n请重试\n");
 			}
 		}
 
-		printf("how much is it :");
+		printf("演出票价 :");
 		scanf("%d", &rec.price);
 		printf("=======================================================================================\n");
 		if (Play_Srv_Add(&rec))
 		{
 			newRecCount += 1;
-			printf("the new play added successfilly!\n");
+			printf("添加成功!\n");
 		}
 		else
-			printf("the new play added failed! \n");
+			printf("添加失败! \n");
 
 		printf("---------------------------------------------------------------------------------------\n");
 
@@ -238,9 +239,7 @@ int Play_UI_Delete(int id)
 	}
 	else
 	{
-		{
-			printf("the play deleted faile!\n");
-		}
+		printf("the play deleted faile!\n");
 	}
 	return 0;
 }
@@ -266,30 +265,30 @@ int Play_UI_Modify(int id)
 
 	system("clear");
 	printf("=======================================================================================\n");
-	printf("*******************************updata    projection   play ****************************\n");
+	printf("*******************************更新演出信息 ****************************\n");
 	printf("---------------------------------------------------------------------------------------\n");
 	printf("play  id :  %d\n", rec.id);
-	printf("please enter new repertoire information \n");
-	printf("play name  : ");
+	printf("请在下方输入添加的演出信息.\n");
+	printf("演出名称: ");
 	scanf("%s", rec.name);
-	printf("the  type of the play  (1 is the FILE  ||  2  is the  opear   ||   3   is the concert)");
+	printf("演出类型  (1 电影 || 2 戏剧 || 3 演唱会)");
 	scanf("%d", &(rec.type));
 	getchar();
-	printf("the play destination area  ?   ");
+	printf("上映地区?");
 	scanf("%s", rec.area);
-	printf("the grade of the play    (1 or 2 or 3)  ");
+	printf("演出等级  (1 or 2 or 3)  ");
 	scanf("%d", &rec.rating);
 	getchar();
-	printf("how long does the play last  ?");
+	printf("演出持续时间?");
 	scanf("%d", &rec.duration);
 	getchar();
-	printf("When does the play begin ? ");
+	printf("演出开始于?");
 	scanf("%d%d%d", &rec.start_date.year, &rec.start_date.month, &rec.start_date.day);
 	getchar();
-	printf("When does the play end ? ");
+	printf("演出结束于?");
 	scanf("%d%d%d", &rec.end_date.year, &rec.end_date.month, &rec.end_date.day);
 	getchar();
-	printf("how much is it ?");
+	printf("票价多少?");
 	scanf("%d", &rec.price);
 	printf("==============================\n");
 	printf("%s\n", rec.name);
@@ -306,17 +305,17 @@ int Play_UI_Query(int id)
 	if (Play_Srv_FetchByID(id, &buf))
 	{
 
-		printf("find success!\n");
-		printf("Play Existence\n");
+		printf("查找成功!\n");
+		printf("演出存在\n");
 		rtn = 1;
 	}
 	else
 	{
-		printf("find Failure\n");
-		printf("Plays Not Existing\n");
+		printf("查找失败\n");
+		printf("演出不存在\n");
 	}
 
-	printf("pleasr Press the enter\n");
+	printf("请输入[Enter]\n");
 	getchar();
 	return rtn;
 }

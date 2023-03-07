@@ -15,7 +15,7 @@ inline char Seat_UI_Status2Char(seat_status_t status)
     else if (status == 1)
         return '#';
     else if (status == 9)
-        return '@';
+        return '~';
 }
 
 inline seat_status_t Seat_UI_Char2Status(char statusChar)
@@ -24,7 +24,7 @@ inline seat_status_t Seat_UI_Char2Status(char statusChar)
         return SEAT_NONE;
     else if (statusChar == '#')
         return SEAT_GOOD;
-    else if (statusChar == '@')
+    else if (statusChar == '~')
         return SEAT_BROKEN;
 }
 
@@ -57,7 +57,7 @@ void Seat_UI_MgtEntry(int roomID)
     do
     {
 
-        printf("row:%d                   colum:%d                  seatsnumber:%d\n", rec.rowsCount, rec.colsCount, rec.seatsCount);
+        printf("行数:%d                   列数:%d                  座位总数:%d\n", rec.rowsCount, rec.colsCount, rec.seatsCount);
 
         printf("-------------------------------------------------------------------\n");
         setbuf(stdin, NULL);
@@ -113,57 +113,57 @@ void Seat_UI_MgtEntry(int roomID)
         {
         case 'A':
         case 'a':
-            printf("please input the row :");
+            printf("请输入行号 :");
             scanf("%d", &row1);
-            printf("please input the col :");
+            printf("请输入列号 :");
             scanf("%d", &column1);
             getchar();
             if (!Seat_UI_Add(head, roomID, row1, column1))
             {
-                printf("input error,添加失败\n");
+                printf("添加失败!\n");
             }
             else
             {
                 rec.seatsCount = rec.seatsCount + 1;
                 Studio_Srv_Modify(&rec);
                 Seat_Srv_FetchByRoomID(head, roomID);
-                printf("add accept\n");
+                printf("添加成功!\n");
             }
             break;
         case 'M':
         case 'm':
-            printf("please input the row :");
+            printf("请输入行号 :");
             scanf("%d", &row1);
-            printf("please input the col :");
+            printf("请输入列号 :");
             scanf("%d", &column1);
             getchar();
             if (!Seat_UI_Modify(head, row1, column1))
             {
-                printf("input error，修改失败\n");
+                printf("修改失败!\n");
             }
             else
             {
                 Seat_Srv_FetchByRoomID(head, roomID);
-                printf("mod accept\n");
+                printf("修改成功!\n");
             }
             break;
         case 'D':
         case 'd':
-            printf("please input the row :");
+            printf("请输入行号 :");
             scanf("%d", &row1);
-            printf("please input the col :");
+            printf("请输入列号 :");
             scanf("%d", &column1);
             getchar();
             if (!Seat_UI_Delete(head, row1, column1))
             {
-                printf("input error，删除失败\n");
+                printf("删除失败!\n");
             }
             else
             {
                 rec.seatsCount = rec.seatsCount - 1;
                 Studio_Srv_Modify(&rec);
                 Seat_Srv_FetchByRoomID(head, roomID);
-                printf("del accept\n");
+                printf("删除成功!\n");
             }
             break;
         }
@@ -188,15 +188,8 @@ int Seat_UI_Add(seat_list_t list, int roomID, int row, int column)
         {
             return 1;
         }
-        else
-        {
-            return 0;
-        }
     }
-    else
-    {
-        return 0;
-    }
+    return 0;
 }
 
 int Seat_UI_Modify(seat_list_t list, int row, int column)
@@ -212,10 +205,10 @@ int Seat_UI_Modify(seat_list_t list, int row, int column)
         printf(
             "*******************************************************************\n");
         printf(
-            "[#]Good | [@]Break | [ ]Empty | the seat's situation is %c", Seat_UI_Status2Char(temp.status));
+            "[#]GOOD | [~]BROKEN | [ ]NONE | 座位状态是: %c", Seat_UI_Status2Char(temp.status));
         printf(
             "\n==================================================================\n");
-        printf("Your Choice:");
+        printf("您的选择:");
         scanf("%c", &choice);
         getchar();
         tmp->data.status = Seat_UI_Char2Status(choice);
@@ -225,15 +218,8 @@ int Seat_UI_Modify(seat_list_t list, int row, int column)
 
             return 1;
         }
-        else
-        {
-            return 0;
-        }
     }
-    else
-    {
-        return 0;
-    }
+    return 0;
 }
 
 int Seat_UI_Delete(seat_list_t list, int row, int column)
@@ -247,13 +233,6 @@ int Seat_UI_Delete(seat_list_t list, int row, int column)
         {
             return 1;
         }
-        else
-        {
-            return 0;
-        }
     }
-    else
-    {
-        return 0;
-    }
+    return 0;
 }

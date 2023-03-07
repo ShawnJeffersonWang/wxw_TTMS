@@ -153,13 +153,13 @@ int Studio_Perst_SelectAll(studio_list_t list)
 	studio_t data;
 	int recCount = 0;
 
-	assert(NULL != list);
-
+	assert(list!=NULL);
 	List_Free(list, studio_node_t);
 
 	FILE *fp = fopen(STUDIO_DATA_FILE, "rb");
-	if (NULL == fp)
+	if (fp==NULL)
 	{
+		printf("fopen: %s error\n",STUDIO_DATA_FILE);
 		return 0;
 	}
 
@@ -168,17 +168,12 @@ int Studio_Perst_SelectAll(studio_list_t list)
 		if (fread(&data, sizeof(studio_t), 1, fp))
 		{
 			newNode = (studio_node_t *)malloc(sizeof(studio_node_t));
-			if (!newNode)
-			{
-				printf(
-					"Warning, Memory OverFlow!!!\n Cannot Load more Data into memory!!!\n");
-				break;
-			}
 			newNode->data = data;
 			List_AddTail(list, newNode);
 			recCount++;
 		}
 	}
+
 	fclose(fp);
 	return recCount;
 }

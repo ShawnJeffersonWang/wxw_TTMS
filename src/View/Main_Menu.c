@@ -18,19 +18,19 @@ void Main_Menu(void)
 	{
 		system("clear");
 		printf("\n==================================================================\n");
-		printf("**************** Theater Ticket Management System ****************\n");
-		printf("[S]tudio Management.\n");
-		printf("[P]lay Management.\n");
-		printf("[T]icket Sale.\n");
-		printf("[I]nquiry Performance.\n");
-		printf("[R]eturn Ticket.\n");
-		printf("[L]StaSaLes\n");
-		printf("[Q]SalesAanalysis.\n");
-		printf("[A]ccount Management.\n");
-		printf("[M]aiAccount\n");
-		printf("[E]xist.\n");
-		printf("\n==================================================================\n");
-		printf("Please input your choice:");
+		printf("********************** TTMS剧院票务管理系统 **********************\n");
+		printf("[S]管理演出厅.\n");
+		printf("[P]管理剧目.\n");
+		printf("[T]售票.\n");
+		printf("[I]查询演出.\n");
+		printf("[R]退票.\n");
+		printf("[L]统计销售额\n");
+		printf("[Q]统计票房.\n");
+		printf("[A]系统管理员\n");
+		printf("[M]维护个人资料\n");
+		printf("[E]退出.\n");
+		printf("====================================================================\n");
+		printf("请输入你的选择:");
 		choice = getchar();
 		while ((ch0 = getchar()) != '\n')
 			;
@@ -75,4 +75,6 @@ void Main_Menu(void)
 		}
 
 	} while ('E' != choice && 'e' != choice);
+	
+	return;
 }

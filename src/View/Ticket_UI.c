@@ -30,7 +30,7 @@ void Ticket_UI_MgtEntry(int schedule_id)
 
 	printf("=======================================================================\n");
 
-	printf("Name          Stduio ID                Date                  Time       \n");
+	printf("名称          演出厅ID                日期                  时间       \n");
 	printf("%s                 %d             %d.%d.%d               %d:%d:%d\n", data.name, buf.studio_id, buf.date.year, buf.date.month, buf.date.day, buf.time.hour, buf.time.minute, buf.time.second);
 
 	printf("[G]enerating tickets    [R]eproduction of tickets \n");
@@ -69,8 +69,8 @@ void Ticket_UI_Query(void)
 		Ticket_Srv_FetchAll(list);
 	*/
 	printf("==================================================\n");
-	printf("******************Find Ticket*********************\n");
-	printf("please input the id of the ticket :");
+	printf("******************查询演出票*********************\n");
+	printf("请输入演出票ID:");
 
 	int id;
 	scanf("%d", &id);
@@ -89,7 +89,7 @@ int Ticket_UI_ShowTicket(int ticket_id)
 	}
 	else
 	{
-		printf("ticket ID      schedule ID      Seat ID      Ticket Price      Ticket status    \n");
+		printf("票ID      演出计划ID      座位ID      票价      票状态    \n");
 		printf("%6d  %6d     %6d    %6d   %6d    \n", buf.id, buf.schedule_id, buf.seat_id, buf.price, buf.status);
 	}
 }
@@ -97,7 +97,7 @@ int Ticket_UI_ShowTicket(int ticket_id)
 void Ticket_UI_Print(const ticket_t data)
 {
 	printf("your ticket data : \n");
-	printf("Ticket ID      Schedule ID    Saet ID  Price\n");
+	printf("票ID      演出计划ID    座位ID  票价\n");
 	printf("%d                  %d           %d      %d    \n", data.id, data.schedule_id, data.seat_id, data.price);
 	printf("---------------------------------------\n");
 	getchar();

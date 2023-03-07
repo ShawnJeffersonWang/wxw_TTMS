@@ -1,19 +1,21 @@
 PROGRAM = TTMS
 
-C_SOURCES = $(shell find . -name "*.c")
+C_SOURCES = $(shell find ./ -name "*.c")
 C_OBJECTS = $(patsubst %.c, %.o, $(C_SOURCES))
 
-CC = gcc
+myArgs = -Wall -g
 
-C_FLAGS = -c -g -I.   
-all: $(C_OBJECTS) 
+ALL: $(PROGRAM) 
+
+$(PROGRAM):$(C_OBJECTS)
+	@echo link...
+	gcc $^ -o $@ $(myArgs)
+
+$(C_OBJECTS):%.o:%.c
 	@echo compile...
-	$(CC) $(C_OBJECTS) -o $(PROGRAM)
+	gcc -c $< -o $@ $(myArgs)
 
-.c.o:
-	@echo link$< ...
-	$(CC) $(C_FLAGS) $< -o $@
-
-.PHONY:clean
 clean:
-	$(RM) $(C_OBJECTS) TTMS
+	-rm -rf $(C_OBJECTS) $(PROGRAM)
+
+.PHONY: clean ALL

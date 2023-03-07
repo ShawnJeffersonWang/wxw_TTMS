@@ -12,7 +12,7 @@ account_t gl_CurUser;
 // 创建系统初始化账号admin
 void Account_Srv_InitSys()
 {
-	if (Account_Perst_CheckAccFile() == 1)
+	if (Account_Perst_CheckAccFile() == 1)//存在系统用户account.dat文件就直接return
 	{
 		return;
 	}
@@ -56,7 +56,7 @@ void Account_Srv_InitSys()
 	MD5Init(&md5);
 	MD5Update(&md5, encrypt, strlen((char *)encrypt));
 	MD5Final(&md5, decrypt);
-	// printf("加密前:%s\n加密后:",encrypt);
+	printf("加密前:%s\n加密后:", encrypt);
 	for (int i = 0; i < 16; i++)
 	{
 		// printf("%02x",decrypt[i]);
@@ -119,10 +119,6 @@ int Account_Srv_Verifyno(char usrName[])
 	{
 		gl_CurUser = usr;
 		return 1;
-	}
-	else
-	{
-		return 0;
 	}
 	return 0;
 }

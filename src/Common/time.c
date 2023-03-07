@@ -3,8 +3,8 @@
 int time_judge(int year, int month, int day)
 {
 	int flag = 1;
-	int found = 1;																				   // 这起始值为平年
-	if (year % 4 == 0 && year % 100 != 0 && year % 200 != 0 && year % 300 != 0 && year % 400 != 0) // 判断这一年是否为闰年
+	int found = 1;											   // 这起始值为平年
+	if ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0) // 判断这一年是否为闰年
 	{
 		found = 0; // 闰年
 	}
