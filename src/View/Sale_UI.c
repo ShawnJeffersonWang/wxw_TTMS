@@ -404,7 +404,7 @@ void Sale_UI_ReturnTicket()
 	if (Ticket_Srv_FetchByticketID(id, &buf) == 1) // 查询票是否存在
 	{
 		if (buf.status == 1) // 查询票是否售出
-		{
+		{ 
 			buf.status = 0;
 			Ticket_Srv_Modify(&buf); // 调用Ticket_Srv_Modify函数修改票的状态
 
